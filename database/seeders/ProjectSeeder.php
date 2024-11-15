@@ -18,7 +18,6 @@ class ProjectSeeder extends Seeder
     public function run()
     {
 
-        DB::table('projects')->truncate();
         $faker = Faker::create();
         $typeIds = Type::all()->pluck('id');
         for ($i = 0; $i < 30; $i++) {

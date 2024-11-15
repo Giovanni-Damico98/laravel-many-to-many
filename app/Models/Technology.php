@@ -9,4 +9,9 @@ class Technology extends Model
 {
     // Specifica la tabella associata al Model
     protected $table = 'technology';
+
+    public function projects()
+    {
+        return $this->belongsToMany(Project::class);
+    }
 }
