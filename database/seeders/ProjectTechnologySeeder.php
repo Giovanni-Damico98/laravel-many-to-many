@@ -16,7 +16,10 @@ class ProjectTechnologySeeder extends Seeder
     public function run(Faker $faker): void
     {
         $projects = Project::all();
-        $technologies = Technology::all();
-        
+        $technologies = Technology::all()->pluck('id');
+
+        foreach ($projects as $project) {
+            $project->technologies()->attach($faker->randomElements($technologies, 3));
+        }
     }
 }
