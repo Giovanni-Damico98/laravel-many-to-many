@@ -23,6 +23,19 @@
                         </select>
                     </div>
 
+                    <div class="form-group my-3">
+                        <label for="project_technology" class="mb-1">Seleziona Tecnologie</label> <br>
+                        @foreach ($technologies as $technology)
+                            <div class="form-check">
+                                <input type="checkbox" name="technologies[]" value="{{ $technology->id }}"
+                                    id="technology-{{ $technology->id }}" class="form-check-input">
+                                <label for="technology-{{ $technology->id }}" class="form-check-label">
+                                    {{ $technology->name }}
+                                </label>
+                            </div>
+                        @endforeach
+                    </div>
+
                     <div class="form-group">
                         <label for="date">Iniziato in data</label>
                         <input type="date" name="date" id="date" class="form-control" required>

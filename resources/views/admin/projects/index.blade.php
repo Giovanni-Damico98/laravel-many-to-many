@@ -15,7 +15,12 @@
                 <div class="col-md-4 mb-4 d-flex align-items-stretch">
                     <div class="card w-100 pt-2">
                         <div class="card-body">
-                            <h5 class="card-title">Project Name: {{ $project->name }}</h5>
+                            <h5 class="card-title">Nome Progetto: {{ $project->name }}</h5>
+
+                            <h4 class="card-subtitle mb-3 text-muted">Tipo di progetto:
+                                <strong>{{ $project->type->name }}</strong>
+                            </h4>
+
                             @forelse ($project->technologies as $technology)
                                 <h6 class="card-subtitle mb-2 text-muted">Tipo di tecnologia:
                                     {{ $technology->name }}</h6>
@@ -23,9 +28,11 @@
                             @endforelse
 
                             <h6 class="card-subtitle mb-2 text-muted">Started on: {{ $project->date }}</h6>
+
                             <p class="card-text">
-                                <strong>Languages used:</strong> {{ $project->languages }}
+                                <strong>Linguaggio utilizzato:</strong> {{ $project->languages }}
                             </p>
+
                             <p class="card-text">
                                 {{ $project->description }}
                             </p>

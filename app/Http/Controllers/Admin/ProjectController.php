@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Project;
+use App\Models\Technology;
 use App\Models\Type;
 use Illuminate\Http\Request;
 
@@ -23,8 +24,10 @@ class ProjectController extends Controller
      */
     public function create()
     {
+        $project = Project::all();
         $types = Type::all();
-        return view('admin.projects.create', compact('types'));
+        $technologies = Technology::all();
+        return view('admin.projects.create', compact('types', 'technologies', 'project'));
     }
 
     /**
@@ -38,6 +41,7 @@ class ProjectController extends Controller
             'type_id' => 'required|numeric',
             'date' => 'required|date',
             'languages' => 'nullable|string|max:255',
+            'technologies' => 'array',
             'description' => 'required|string',
         ]);
 
@@ -49,6 +53,8 @@ class ProjectController extends Controller
         $project->languages = $request->input('languages');
         $project->description = $request->input('description');
         $project->save();
+
+        $project->technologies()->sync($request->input('technologies'));
 
         // Redirect con messaggio di successo
         return redirect()->route('admin.projects.index')->with('success', 'Project created successfully!');
@@ -62,7 +68,7 @@ class ProjectController extends Controller
     {
         $projects = Project::findOrFail($id);
         $relatedProjects = Project::where('type_id', $projects->type_id)
-            ->where('id', '!=', $projects->id) // Exclude the current project
+            ->where('id', '!=', $projects->id)
             ->get();
         return view('admin.projects.show', compact("projects", 'relatedProjects'));
     }
@@ -73,12 +79,17 @@ class ProjectController extends Controller
     public function edit(string $id)
     {
         $types = Type::all();
+        $technologies = Technology::all();
 
         // Trova il progetto da modificare
         $project = Project::findOrFail($id);
 
         // Ritorna la vista di modifica con il progetto da modificare
-        return view('admin.projects.edit', compact('project', 'types'));
+        return view('admin.projects.edit', compact(
+            'project',
+            'types',
+            'technologies'
+        ));
     }
 
     /**
@@ -95,6 +106,7 @@ class ProjectController extends Controller
             'type_id' => 'required|numeric',
             'date' => 'required|date',
             'languages' => 'nullable|string|max:255',
+            'technologies' => 'array',
             'description' => 'required|string',
         ]);
 
@@ -105,6 +117,8 @@ class ProjectController extends Controller
         $project->languages = $request->input('languages');
         $project->description = $request->input('description');
         $project->save();
+
+        $project->technologies()->sync($request->input('technologies'));
 
         // Redirect con messaggio di successo
         return redirect()->route('admin.projects.index');

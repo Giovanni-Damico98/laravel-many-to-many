@@ -17,13 +17,13 @@ return new class extends Migration
             // $table->foreign('project_id')->references('id')->on('projects');
 
             // metodo abbreviato di quanto scritto nelle due righe sopra
-            $table->foreignId('project_id')->constrained();
+            $table->foreignId('project_id')->constrained()->onDelete('cascade');
 
             // $table->unsignedBigInteger('technology_id');
             // $table->foreign('technology_id')->references('id')->on('technology');
 
             // metodo abbreviato di quanto scritto nelle due righe sopra
-            $table->foreignId('technology_id')->constrained('technology');
+            $table->foreignId('technology_id')->constrained('technology')->onDelete('cascade');
 
             $table->primary(['project_id', 'technology_id']);
 

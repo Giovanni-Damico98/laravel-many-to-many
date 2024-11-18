@@ -11,6 +11,11 @@
                     <div class="card-body">
                         <h5 class="card-title mb-3">Nome del progetto: <strong>{{ $projects->name }}</strong>
                         </h5>
+                        @forelse ($projects->technologies as $technology)
+                            <h6 class="card-subtitle mb-2 text-muted">Tipo di tecnologia:
+                                {{ $technology->name }}</h6>
+                        @empty
+                        @endforelse
                         <h4 class="card-subtitle mb-3 text-muted">Tipo di progetto:
                             <strong>{{ $projects->type->name }}</strong>
                         </h4>
